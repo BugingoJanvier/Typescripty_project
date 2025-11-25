@@ -41,7 +41,6 @@ export class TasksService {
         task.status = updateTaskStatusDto.newStatus;
         task.priority = updateTaskStatusDto.newPriority;
         task.updatedAt = new Date(); 
-        
         return task;
     }
 
