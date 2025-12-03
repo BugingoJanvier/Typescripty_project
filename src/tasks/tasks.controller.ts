@@ -1,8 +1,8 @@
-import { Body, Patch, Delete,Controller, Get, Param, Post, NotFoundException } from '@nestjs/common';
+import { Body, Patch, Delete,Controller, Get, Param, Post, NotFoundException, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import type { Task } from './task.model';
 import { createTaskDto } from './dto/create-task.dto';
-import { UpdateTaskStatusDto } from './dto/update-task.dto';
+import { GetTasksFilterDto } from './dto/Search.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -40,5 +40,15 @@ export class TasksController {
         }
         return this.tasksService.deleteTask(id);
     }   
-    
+
+    @Get()
+    getTasks(@Query() filterDTO: GetTasksFilterDto): Task[] {
+
+        if (Object.keys(filterDTO).length) {
+            return this.tasksService.getTaskWithFilters(filterDTO);
+        }else{
+        return this.tasksService.getAllTasks();    
+        }
+        
+    }
 }
